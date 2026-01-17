@@ -27,6 +27,8 @@ export function LabAIAssistant({ vulnerabilityType }: LabAIAssistantProps) {
         "I'm here to guide you through SQL Injection exploitation!\n\nTips:\n• SQL queries use AND/OR operators to create conditions\n• Try injection like: admin' --\n• The -- comments out the rest of the query\n• What specific aspect would you like help with?",
       'xss':
         "I'm your XSS exploitation guide!\n\nKey concepts:\n• XSS executes in the victim's browser\n• Common payloads: <script>alert('XSS')</script>\n• Try searching for: <img src=x onerror=alert('XSS')>\n• How can I assist you?",
+      'html-injection':
+        "Welcome to HTML Injection lab!\n\nKey points:\n• HTML tags can change page appearance\n• Try: <h1>Hacked!</h1>\n• Or: <img src=\"fake\">\n• Different from XSS - no JavaScript execution\n• Ready to inject some HTML?",
       'auth-bypass':
         "Welcome to the Authentication Bypass lab!\n\nCommon techniques:\n• SQL injection in login forms\n• Default credentials (admin/admin)\n• Weak password resets\n• Try: admin' -- in the username field\n• Need help with anything specific?",
       'broken-access':
@@ -68,18 +70,14 @@ export function LabAIAssistant({ vulnerabilityType }: LabAIAssistantProps) {
           "Great question! Here's how to exploit SQL injection:\n\n1. Find the vulnerable parameter (usually search/login)\n2. Try adding ' to break the query\n3. Use OR operators: ' OR '1'='1\n4. Comment out the rest: ' OR '1'='1'--\n5. Extract data with UNION queries\n\nExample payload: ' OR '1'='1'--\n\nWant to try a specific technique?",
         'xss':
           "XSS exploitation steps:\n\n1. Identify where user input is reflected\n2. Try simple alert box: <script>alert('XSS')</script>\n3. If blocked, try event handlers: <img onerror=alert('XSS')>\n4. Use encoding: <img src=x onerror=\"alert('XSS')\">\n5. Check if input is sanitized\n\nLet's test your understanding!",
+        'html-injection':
+          "HTML Injection exploitation:\n\n1. Find where user input is displayed\n2. Try basic tags: <h1>Test</h1>\n3. Inject images: <img src=\"url\">\n4. Create fake forms for phishing\n5. Can lead to XSS if not filtered\n\nTry: <b>Bold text</b> or <h1>Big heading</h1>\n\nWhat would you like to inject?",
         'auth-bypass':
           "Authentication bypass techniques:\n\n1. Try default credentials (admin/admin)\n2. SQL injection: admin' --\n3. Boolean blind: ' OR '1'='1\n4. Check password reset vulnerabilities\n5. Look for session manipulation\n\nWhich method would you like to attempt?",
         'broken-access':
           "Test access control:\n\n1. Log in with different users\n2. Try accessing other user profiles\n3. Modify IDs in URLs (1, 2, 3...)\n4. Check API endpoints\n5. Look for role-based access issues\n\nReady to test?",
         'csrf':
           "CSRF exploitation:\n\n1. Understand the vulnerable action\n2. Create a malicious form\n3. Host it on external site\n4. Trick user into visiting\n5. Action executes with their privileges\n\nLet me know what action to target!",
-        'xxe':
-          "XXE exploitation:\n\n1. Find XML upload/parsing\n2. Inject entity declaration\n3. Reference the entity\n4. Access local files\n5. Can also cause XXE Bombs (DoS)\n\nReady to craft payload?",
-        'ssrf':
-          "SSRF exploitation:\n\n1. Find parameter that fetches URLs\n2. Try localhost: http://localhost:8080\n3. Try 127.0.0.1 addresses\n4. Access internal services\n5. Can scan internal network\n\nWhich service to target?",
-        'deserialization':
-          "Deserialization attacks:\n\n1. Find serialized objects\n2. Modify object properties\n3. Create malicious gadget chains\n4. Deserialize tampered object\n5. Achieves RCE or privilege escalation\n\nAny questions about this?",
       };
       return tips[vulnType] || "I can help you with exploiting this vulnerability!";
     }

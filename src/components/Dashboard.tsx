@@ -39,13 +39,13 @@ export function Dashboard() {
         </p>
         <div className="flex flex-wrap gap-4">
           <div className="bg-white/20 backdrop-blur-sm rounded-lg px-4 py-2">
-            <span className="font-semibold">8 Vulnerability Types</span>
+            <span className="font-semibold">6 Vulnerability Labs</span>
           </div>
           <div className="bg-white/20 backdrop-blur-sm rounded-lg px-4 py-2">
-            <span className="font-semibold">Interactive Labs</span>
+            <span className="font-semibold">7 Learning Modules</span>
           </div>
           <div className="bg-white/20 backdrop-blur-sm rounded-lg px-4 py-2">
-            <span className="font-semibold">Real-World Tools</span>
+            <span className="font-semibold">6 Security Tools</span>
           </div>
           <div className="bg-white/20 backdrop-blur-sm rounded-lg px-4 py-2">
             <span className="font-semibold">AI Assistant</span>

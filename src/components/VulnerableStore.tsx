@@ -65,6 +65,11 @@ export function VulnerableStore({ vulnerabilityType, onClose }: VulnerableStoreP
       hint: 'Try injecting JavaScript in the search box. Example: <script>alert("XSS")</script>',
       description: 'User input is not properly sanitized before being displayed on the page.',
     },
+    'html-injection': {
+      title: 'HTML Injection Lab',
+      hint: 'Try injecting HTML tags in the search box. Example: <h1>Hacked!</h1> or <img src=x>',
+      description: 'User input is rendered as HTML without proper encoding, allowing HTML markup injection.',
+    },
     'auth-bypass': {
       title: 'Authentication Bypass Lab',
       hint: 'Try common username/password combinations or SQL injection in login form. Example: admin\' --',
@@ -72,28 +77,13 @@ export function VulnerableStore({ vulnerabilityType, onClose }: VulnerableStoreP
     },
     'broken-access': {
       title: 'Broken Access Control Lab',
-      hint: 'Try accessing other user\'s data by modifying URLs or request parameters.',
+      hint: 'Try changing user IDs in the interface to access other users\' profiles and orders.',
       description: 'The application does not properly verify user permissions before granting access to resources.',
     },
     'csrf': {
       title: 'CSRF Lab',
-      hint: 'Try crafting a malicious form that makes requests on behalf of authenticated users.',
-      description: 'The application does not validate the origin of requests.',
-    },
-    'xxe': {
-      title: 'XXE Lab',
-      hint: 'Try uploading XML files with external entity declarations.',
-      description: 'XML parser is configured to process external entities.',
-    },
-    'ssrf': {
-      title: 'SSRF Lab',
-      hint: 'Try making the server request internal resources by manipulating URLs.',
-      description: 'The server fetches resources from user-supplied URLs without proper validation.',
-    },
-    'deserialization': {
-      title: 'Insecure Deserialization Lab',
-      hint: 'Try modifying serialized objects to gain unauthorized access.',
-      description: 'The application deserializes untrusted data without proper validation.',
+      hint: 'Try understanding how a malicious form on another site could perform actions without CSRF tokens.',
+      description: 'The application does not validate the origin of requests or use anti-CSRF tokens.',
     },
   };
 
@@ -110,6 +100,12 @@ export function VulnerableStore({ vulnerabilityType, onClose }: VulnerableStoreP
 
     if (vulnerabilityType === 'xss' && query.toLowerCase().includes('<script>')) {
       setExploitMessage('XSS Vulnerability Detected! In a real scenario, this script would execute.');
+      setShowExploitAlert(true);
+      setTimeout(() => setShowExploitAlert(false), 5000);
+    }
+
+    if (vulnerabilityType === 'html-injection' && (query.includes('<') || query.includes('>'))) {
+      setExploitMessage('HTML Injection Successful! Your HTML markup is rendered on the page.');
       setShowExploitAlert(true);
       setTimeout(() => setShowExploitAlert(false), 5000);
     }
@@ -217,9 +213,14 @@ export function VulnerableStore({ vulnerabilityType, onClose }: VulnerableStoreP
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
                 />
                 {searchQuery && (
-                  <p className="text-sm text-gray-600 mt-2">
-                    Searching for: <span className="font-mono bg-gray-100 px-2 py-1 rounded">{searchQuery}</span>
-                  </p>
+                  <div className="mt-2 p-3 bg-gray-50 rounded-lg border border-gray-200">
+                    <p className="text-sm text-gray-600 mb-1">Searching for:</p>
+                    {vulnerabilityType === 'html-injection' ? (
+                      <div className="font-mono bg-white px-3 py-2 rounded border border-gray-300" dangerouslySetInnerHTML={{ __html: searchQuery }} />
+                    ) : (
+                      <span className="font-mono bg-white px-3 py-2 rounded border border-gray-300 inline-block">{searchQuery}</span>
+                    )}
+                  </div>
                 )}
               </div>
 
